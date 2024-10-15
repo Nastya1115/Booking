@@ -87,7 +87,7 @@ def hotel_page(request, hotel_name):
             reservations = Reservation.objects.filter(room=room_id)
             for reservation in reservations:
                 if reservation.reservation_start < reservation_end_s and reservation.reservation_end > reservation_start_s:
-                    messages.error(request, 'Дата уже забронирована')
+                    messages.error(request, 'Date is already reservated')
                     break
             else:
                 Reservation.objects.create(

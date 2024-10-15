@@ -1,7 +1,7 @@
 /* верхнее меню */
 
 .topnav {
-    background-color: #333;
+    background-color: #353435;
     overflow: hidden;
   }
   
@@ -33,7 +33,7 @@
   
   /* главная кнопка */
   .topnav a.active {
-    background-color: #a128ac;
+    background-color: #2882ac;
     color: white;
   }
 

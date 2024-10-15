@@ -14,8 +14,10 @@
     <div>    
     <p style="text-align: center;font-size: 50px;font-weight: 600;">Room {{room.number}}</p>
     </div>
+    <p>Room type: {{room.room_type}}</p>
+    <p>Room description: {{room.description}}</p>
     
-    <div id="carouselExample" class="carousel slide">
+    <div id="carouselExample" class="carousel slide"  style="max-width: 200px;max-height: 200px;">
       <div class="carousel-inner">
         
         {%for image in images%}

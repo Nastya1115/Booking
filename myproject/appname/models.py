@@ -1,18 +1,17 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
-class User(models.Model):
-    name = models.CharField(max_length=20)
-    password = models.CharField(max_length=20)
+class User(AbstractUser):
     email = models.EmailField()
 
     def __str__(self):
-        return self.name
+        return self.username
 
 class Hotel(models.Model):
     name = models.CharField(max_length=20, unique=True)
-    location = models.TextField()
+    description = models.TextField()
 
     def __str__(self):
         return self.name
@@ -20,17 +19,19 @@ class Hotel(models.Model):
 class Room(models.Model):
     number = models.IntegerField()
     room_type = models.CharField(max_length=20)
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    description = models.TextField()
+    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name='rooms')
 
     def __str__(self):
         return str(self.number)
 
 class Reservation(models.Model):
-    reservation = models.IntegerField(auto_created=True, unique=True)
     reservation_start = models.DateField()
     reservation_end = models.DateField()
-    room = models.OneToOneField(Room, on_delete=models.CASCADE)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return str(self.reservation)
+class Image_room(models.Model):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='static/images/')
+    description = models.CharField(max_length=50, blank=True)

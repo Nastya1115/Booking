@@ -1,0 +1,9 @@
+.aaaaa {
+    color: #000000;
+    text-decoration: none;
+} 
+
+.bbbbb :hover {
+    background-color: #dedede;
+    color: rgb(39, 20, 33);
+}

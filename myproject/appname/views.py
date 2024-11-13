@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from appname.models import *
 from django.contrib import messages
 from appname.forms import UserForm, UserAuthForm
@@ -65,6 +65,19 @@ def main_page(request):
         context=context
     )
     
+def get_reserved_dates(request, room_id):
+    reservations = Reservation.objects.filter(room=room_id)
+    reserved_dates = []
+
+    # Формируем список занятых дат
+    for reservation in reservations:
+        reserved_dates.append({
+            "start": reservation.reservation_start.strftime('%Y-%m-%d'),
+            "end": reservation.reservation_end.strftime('%Y-%m-%d')
+        })
+
+    return JsonResponse(reserved_dates, safe=False)
+
 def hotel_page(request, hotel_name):
     hotel = Hotel.objects.get(name=hotel_name)
     rooms = hotel.rooms.all()
@@ -114,5 +127,20 @@ def room_page(request, room_id):
     return render(
             request,
             template_name="room_page.html",
+            context=context
+    )
+
+def my_reservations(request):
+    context={}
+
+    if request.user.is_authenticated:
+        current_user = request.user
+        reservations = current_user.reservation_user.all()
+        context['current_user'] = current_user
+        context['reservations'] = reservations
+
+    return render(
+            request,
+            template_name="my_reservations.html",
             context=context
     )

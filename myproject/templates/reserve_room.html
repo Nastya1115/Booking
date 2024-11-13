@@ -1,3 +1,9 @@
+<!--{%load static%}
+<link rel="stylesheet" href="{% static 'css/cal.css' %}">-->
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 <form method="POST">
     {%csrf_token%}
 
@@ -25,3 +31,34 @@
     {%endif%}
     
 </form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var startPicker = flatpickr("#start-time-select");
+        var endPicker = flatpickr("#end-time-select");
+    
+        document.getElementById('room-select').addEventListener('change', function() {
+            var roomId = this.value;
+            
+            // Отправляем AJAX запрос для получения забронированных дат
+            fetch(`/get_reserved_dates/${roomId}/`)
+            .then(response => response.json())
+            .then(data => {
+                // Блокируем даты на Flatpickr
+                startPicker.set('disable', data.map(reservation => {
+                    return {
+                        from: reservation.start,
+                        to: reservation.end
+                    };
+                }));
+                
+                endPicker.set('disable', data.map(reservation => {
+                    return {
+                        from: reservation.start,
+                        to: reservation.end
+                    };
+                }));
+            });
+        });
+    });
+    </script>

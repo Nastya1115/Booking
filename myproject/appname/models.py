@@ -29,7 +29,7 @@ class Reservation(models.Model):
     reservation_start = models.DateField()
     reservation_end = models.DateField()
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reservation_user')
 
 class Image_room(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='images')

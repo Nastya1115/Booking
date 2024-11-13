@@ -5,7 +5,7 @@
     {%load static%}
     <link rel="stylesheet" href="{% static 'css/links.css' %}">
 </head>
-<body>
+<body style="font-family: 'Trebuchet MS', sans-serif;">
 
     {%include 'header.html' %}
 
@@ -13,7 +13,7 @@
     <p style="text-align: center;font-size: 50px;font-weight: 600;">{{hotel.name}}</p>
     </div>
 
-    <p><b>Description:</b> {{hotel.description}}</p>
+    <p style="font-size: 20px;"><b>Description:</b> {{hotel.description}}</p>
 
     {% if request.user.is_authenticated %}
     {%include 'reserve_room.html' %}

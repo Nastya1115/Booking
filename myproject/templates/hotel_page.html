@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hotel</title>
+    {%load static%}
+    <link rel="stylesheet" href="{% static 'css/links.css' %}">
+</head>
+<body style="font-family: 'Trebuchet MS', sans-serif;">
+
+    {%include 'header.html' %}
+
+    <div>    
+    <p style="text-align: center;font-size: 50px;font-weight: 600;">{{hotel.name}}</p>
+    </div>
+
+    <p style="font-size: 20px;"><b>Description:</b> {{hotel.description}}</p>
+
+    {% if request.user.is_authenticated %}
+    {%include 'reserve_room.html' %}
+    {%endif%}
+    <hr>
+
+    <div class="bbbbb" style="display: flex;">   
+    {%for room in rooms%}
+    
+    <div style="font-size: 20px;margin-right: 20px;">
+        <a class='aaaaa' href="{% url 'room_page' room.id %}">
+        <div><b>Room {{room.number}}</b></div>
+        <div>{{room.room_type}}</div>
+        </a>
+    </div>
+    {%endfor%}
+    </div>
+    
+
+</body>
+</html>

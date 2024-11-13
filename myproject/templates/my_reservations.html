@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My reservation</title>
+</head>
+<body  style="font-family: 'Trebuchet MS', sans-serif;">
+    {% if request.user.is_authenticated %}
+    <p>{{current_user.username}}</p>
+    <hr>
+    {%for reservation in reservations%}
+    <p>Date: {{reservation.reservation_start}} - {{reservation.reservation_end}}</p>
+    <p>Room {{reservation.room}} in {{reservation.room.hotel}}</p>
+    {%endfor%}
+    {% else %}
+    <p style="text-align: center;">you must be login first</p>
+    {% endif %}
+</body>
+</html>

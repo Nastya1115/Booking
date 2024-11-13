@@ -1,0 +1,64 @@
+<!--{%load static%}
+<link rel="stylesheet" href="{% static 'css/cal.css' %}">-->
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<form method="POST">
+    {%csrf_token%}
+
+    <label for="room-select">Choose room</label>
+    <select id="room-select" name="room-select">
+        {%for room in rooms%}
+        <option value="{{room.id}}">{{room.number}}</option>
+        {%endfor%}
+    </select>
+    <br><br>
+    <label for="start-time-select">Choose reservation's start</label>
+    <input type="date" id="start-time-select" name="start-time-select">
+    <br><br>
+    <label for="end-time-select">Choose reservation's end</label>
+    <input type="date" id="end-time-select" name="end-time-select">
+    <br><br>
+    <button type="submit">Reserve room</button> 
+
+    {%if messages%}
+    <ul class="messages">
+        {%for message in messages%}
+        <li {% if message.tags%} class="{{message.tags}}"{%endif%}>{{message}}</li>
+        {%endfor%}
+    </ul>
+    {%endif%}
+    
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var startPicker = flatpickr("#start-time-select");
+        var endPicker = flatpickr("#end-time-select");
+    
+        document.getElementById('room-select').addEventListener('change', function() {
+            var roomId = this.value;
+            
+            // Отправляем AJAX запрос для получения забронированных дат
+            fetch(`/get_reserved_dates/${roomId}/`)
+            .then(response => response.json())
+            .then(data => {
+                // Блокируем даты на Flatpickr
+                startPicker.set('disable', data.map(reservation => {
+                    return {
+                        from: reservation.start,
+                        to: reservation.end
+                    };
+                }));
+                
+                endPicker.set('disable', data.map(reservation => {
+                    return {
+                        from: reservation.start,
+                        to: reservation.end
+                    };
+                }));
+            });
+        });
+    });
+    </script>

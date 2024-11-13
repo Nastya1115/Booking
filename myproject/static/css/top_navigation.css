@@ -1,0 +1,39 @@
+/* верхнее меню */
+
+.topnav {
+    background-color: #353435;
+    overflow: hidden;
+  }
+  
+  /* кнопки */
+  .topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+  /* правые кнопки */
+  .topnav a.right {
+    float: right;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  /* при наведении */
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  /* главная кнопка */
+  .topnav a.active {
+    background-color: #2882ac;
+    color: white;
+  }
+

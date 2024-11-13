@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    {%load static%}
+    <link rel="stylesheet" href="{% static 'css/links.css' %}">
+
+</head>
+<body style="font-family: 'Trebuchet MS', sans-serif;">
+
+    {%include 'header.html' %}
+    
+    <h1>Welcome {{current_user}}</h1>
+    <hr>
+    <h2>Hotels list</h2>
+
+    <div class="bbbbb" style="display: flex;"> 
+    {%for hotel in hotels%}
+    <div style="font-size: 20px;margin-right: 20px;">
+    <a class='aaaaa' href="{% url 'hotel_page' hotel.name %}">  
+        {{hotel.name}}
+    </a>
+    </div>
+    {%endfor%}
+
+</body>
+</html>
